@@ -11,6 +11,9 @@ class MoviesController < ApplicationController
   end
 
   def index
+    
+    @all_ratings = Movie.order(:rating).distinct.pluck(:rating)
+    
     if params[:sort_by]  
       @movies = Movie.order(params[:sort_by])
       if params[:sort_by] == 'title'
@@ -18,11 +21,16 @@ class MoviesController < ApplicationController
       else
         @release_date = 'hilite'
       end
-    else
-      @movies = Movie.all
+    else if params[:ratings]
+          ratings_arr = Array.new
+          params[:ratings].each_key { |value| ratings_arr.push(value) }
+           @movies = Movie.where(rating: ratings_arr) 
+         else
+          @movies = Movie.all
+        end
     end
   end
-
+  
   def new
     # default: render 'new' template
   end
