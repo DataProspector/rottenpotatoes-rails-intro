@@ -13,14 +13,14 @@ class MoviesController < ApplicationController
   def index
     
     @all_ratings = Movie.order(:rating).distinct.pluck(:rating)
-    @chkbox_checked = true
+    
     
     if params[:ratings]
-      ratings_arr = Array.new
-      params[:ratings].each_key { |value| ratings_arr.push(value) }
-      @movies = Movie.where(rating: ratings_arr)
+      @rating = params[:ratings].keys
+      @movies = Movie.where(:rating => @rating)
     else
-      @movies = Movie.all
+      @rating = @all_ratings
+      @movies = Movie.where(:rating => @rating)
     end
     
     if params[:sort_by]  
