@@ -27,7 +27,7 @@ class MoviesController < ApplicationController
         params[:ratings].each_key { |value| ratings_arr.push(value) }
         @movies = Movie.where(rating: ratings_arr) 
       else
-        @movies = Movie.all
+          @movies = Movie.all
       end 
     end
   end
