@@ -13,6 +13,7 @@ class MoviesController < ApplicationController
   def index
     
     @all_ratings = Movie.order(:rating).distinct.pluck(:rating)
+    @chkbox_checked = true
     
     if params[:ratings]
       ratings_arr = Array.new
